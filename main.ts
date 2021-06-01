@@ -18,8 +18,11 @@ function Restart () {
     bitbot.setLedColor(0xFFFF00)
 }
 function FeilLøsning () {
-    bitbot.setLedColor(0xFF0000)
-    bitbot.goms(BBDirection.Forward, 0, 4000)
+    radio.sendString("Feil")
+    while (!(input.buttonIsPressed(Button.A))) {
+        bitbot.setLedColor(0xFF0000)
+        bitbot.motor(BBMotor.Both, 0)
+    }
     Restart()
 }
 radio.onReceivedValue(function (name, value) {
@@ -30,7 +33,7 @@ radio.onReceivedValue(function (name, value) {
     } else if (name == "R") {
         Roll = value * -20
     }
-    if (!(Sekvens)) {
+    if (!(Sekvens) && Arm == 1) {
         Sekvens = true
         Kjøretid = input.runningTime()
     }
@@ -45,7 +48,7 @@ let Sekvens = false
 let LøstOppgave = false
 bitbot.select_model(BBModel.XL)
 radio.setGroup(1)
-let Sekvenstid = 4000
+let Sekvenstid = 20000
 Restart()
 basic.forever(function () {
     if (Arm == 1) {
@@ -65,11 +68,11 @@ basic.forever(function () {
         )
         bitbot.motor(BBMotor.Left, Pitch - DriveLeft)
         bitbot.motor(BBMotor.Right, Pitch - DriveRight)
+        if (input.runningTime() - Kjøretid > Sekvenstid && !(LøstOppgave) && Sekvens) {
+            radio.sendNumber(11)
+            FeilLøsning()
+        }
     } else {
         bitbot.motor(BBMotor.Both, 0)
-    }
-    if (input.runningTime() - Kjøretid == Sekvenstid && !(LøstOppgave)) {
-        radio.sendNumber(11)
-        FeilLøsning()
     }
 })

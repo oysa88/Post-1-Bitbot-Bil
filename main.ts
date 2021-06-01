@@ -19,10 +19,8 @@ function Restart () {
 }
 function FeilLøsning () {
     radio.sendString("Feil")
-    while (!(input.buttonIsPressed(Button.A))) {
-        bitbot.setLedColor(0xFF0000)
-        bitbot.motor(BBMotor.Both, 0)
-    }
+    bitbot.setLedColor(0xFF0000)
+    bitbot.motor(BBMotor.Both, 0)
     Restart()
 }
 radio.onReceivedValue(function (name, value) {

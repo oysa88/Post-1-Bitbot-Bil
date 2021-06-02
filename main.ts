@@ -1,6 +1,6 @@
 function RiktigLøsning () {
     bitbot.setLedColor(0x00FF00)
-    bitbot.rotatems(BBRobotDirection.Left, 100, 4000)
+    basic.pause(4000)
     Restart()
 }
 radio.onReceivedNumber(function (receivedNumber) {
@@ -8,9 +8,6 @@ radio.onReceivedNumber(function (receivedNumber) {
         LøstOppgave = true
         RiktigLøsning()
     }
-})
-input.onButtonPressed(Button.A, function () {
-    Restart()
 })
 function Restart () {
     LøstOppgave = false
@@ -20,7 +17,7 @@ function Restart () {
 function FeilLøsning () {
     radio.sendString("Feil")
     bitbot.setLedColor(0xFF0000)
-    bitbot.motor(BBMotor.Both, 0)
+    basic.pause(4000)
     Restart()
 }
 radio.onReceivedValue(function (name, value) {

@@ -24,11 +24,11 @@ radio.onReceivedValue(function (name, value) {
     if (name == "P") {
         Pitch = value * -20
     } else if (name == "A") {
-        Arm = value
+        AvPå = value
     } else if (name == "R") {
         Roll = value * -20
     }
-    if (!(Sekvens) && Arm == 1) {
+    if (!(Sekvens) && AvPå == 1) {
         Sekvens = true
         Kjøretid = input.runningTime()
     }
@@ -37,16 +37,16 @@ let DriveRight = 0
 let DriveLeft = 0
 let Kjøretid = 0
 let Roll = 0
-let Arm = 0
+let AvPå = 0
 let Pitch = 0
 let Sekvens = false
 let LøstOppgave = false
 bitbot.select_model(BBModel.XL)
 radio.setGroup(1)
-let Sekvenstid = 20000
+let Sekvenstid = 40000
 Restart()
 basic.forever(function () {
-    if (Arm == 1) {
+    if (AvPå == 1) {
         DriveLeft = Pitch - pins.map(
         Roll,
         0,
